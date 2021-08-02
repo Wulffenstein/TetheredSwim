@@ -1,12 +1,13 @@
+using Toybox.Lang;
+
 class CountBase
 {
-    public int strokesPerRevolution()
-    {
-        throw Exception('Missing override')
+    public function strokesPerRevolution() as int {
+        
+        throw new Lang.Exception("Missing override");
     }
 
-    public int swimStrokeType()
-    {
-        throw Exception('Missing override')
+    public function swimStrokeType() as int {
+        throw new Lang.Exception("Missing override");
     }
 }
