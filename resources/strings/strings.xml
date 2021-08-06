@@ -1,9 +1,12 @@
 <strings>
     <string id="AppName">TetheredSwim</string>
 
-    <string id="prompt">Click the menu button</string>
-
-    <string id="menu_label_1">Item 1</string>
-    <string id="menu_label_2">Item 2</string>
     <string id="missingOverride">Missing override</string>
+    <string id="free_style">Free style</string>
+    <string id="breast_stroke">Breast stroke</string>
+    <string id="back_stroke">Back stroke</string>
+    <string id="bufferfly">Butterfly</string>
+
+    <string id="swim_type">Swim type</string>
+    <string id="auto_lap">Auto lap</string>
 </strings>

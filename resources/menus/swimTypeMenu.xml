@@ -1,0 +1,6 @@
+<menu id="swimTypeMenu">
+    <menu-item id="item_freestyle" label="@Strings.free_style" />
+    <menu-item id="item_breast_stroke" label="@Strings.breast_stroke" />
+    <menu-item id="item_back_stroke" label="@Strings.back_stroke" />
+    <menu-item id="item_butterfly" label="@Strings.bufferfly" />
+</menu>

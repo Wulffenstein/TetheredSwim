@@ -18,7 +18,8 @@ class TetheredSwimApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as Array<Views or InputDelegates>? {
-        return [ new TetheredSwimView(), new TetheredSwimDelegate() ] as Array<Views or InputDelegates>;
+        var view = new TetheredSwimView() as TetheredSwimView;
+        return [ view, new TetheredSwimDelegate(view) ] as Array<Views or InputDelegates>;
     }
 
 }
