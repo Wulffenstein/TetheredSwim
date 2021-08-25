@@ -11,24 +11,16 @@ class TetheredSwimDelegate extends WatchUi.BehaviorDelegate {
     }
 
     public function onMenu() as Boolean {
-        System.println("Menu");
-        WatchUi.pushView(new Rez.Menus.settingsMenu(), new TetheredSwimMenuDelegate(), WatchUi.SLIDE_UP);
+        var controller = swimView.getSwimActivityController() as SwimActivityController;
+        controller.updateSwimTypeName();
+        WatchUi.pushView(new Rez.Menus.settingsMenu(), new TetheredSwimMenuDelegate(controller), WatchUi.SLIDE_UP);
         return true;
     }
 
     public function onSelect() as Lang.Boolean
     {
-        if (Toybox has :ActivityRecording) 
-        {
-            if (swimView.isSessionRecording())
-            {
-                swimView.stopRecording();
-            }
-            else 
-            {
-                swimView.startRecording();
-            }
-        }
+        swimView.onDelegateSelect();
+
         return true;
     }
 

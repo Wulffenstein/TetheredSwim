@@ -1,4 +1,5 @@
 <menu id="settingsMenu">
     <menu-item id="item_swim_type" label="@Strings.swim_type" />
     <menu-item id="item_auto_lap" label="@Strings.auto_lap" />
+    <menu-item id="item_secs_pr_100m" label="@Strings.secs_pr_100m" />
 </menu>

@@ -9,4 +9,10 @@
 
     <string id="swim_type">Swim type</string>
     <string id="auto_lap">Auto lap</string>
+    <string id="secs_pr_100m">Secs / 100m</string>
+
+    <string id="activity_continue">Continue</string>
+    <string id="activity_save">Save</string>
+    <string id="activity_discard">Discard</string>
+    <string id="timeSeparator">:</string>
 </strings>
