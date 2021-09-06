@@ -21,6 +21,11 @@ class TetheredSwimView extends WatchUi.View {
     // loading resources into memory.
     function onShow() as Void {
         swimActivityController.updateSwimTypeName();
+
+        if (swimActivityController.getActivityState() == PAUSED)
+        {
+            swimActivityController.resumeActivity();            
+        }
     }
 
     // Update the view

@@ -39,6 +39,15 @@ class TetheredSwimMenuDelegate extends WatchUi.MenuInputDelegate {
             case :item_secs_pr_100m:
                 self.createSecsPr100mPicker();
                 break;
+            case :item_save:
+                swimActivityController.stopActivity();
+                break;
+            case :item_continue:
+                swimActivityController.resumeActivity();
+                break;
+            case :item_discard:
+                swimActivityController.discardActivity();
+                break;
             default: throw new Lang.Exception("Unknown item");
         }
     }

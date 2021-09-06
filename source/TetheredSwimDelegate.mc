@@ -12,8 +12,11 @@ class TetheredSwimDelegate extends WatchUi.BehaviorDelegate {
 
     public function onMenu() as Boolean {
         var controller = swimView.getSwimActivityController() as SwimActivityController;
-        controller.updateSwimTypeName();
-        WatchUi.pushView(new Rez.Menus.settingsMenu(), new TetheredSwimMenuDelegate(controller), WatchUi.SLIDE_UP);
+        //controller.updateSwimTypeName();
+        if (controller.getActivityState() == INITIAL)
+        {
+            WatchUi.pushView(new Rez.Menus.settingsMenu(), new TetheredSwimMenuDelegate(controller), WatchUi.SLIDE_UP);
+        }
         return true;
     }
 
