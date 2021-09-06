@@ -4,6 +4,9 @@ import Toybox.Timer;
 import Toybox.Time;
 import Toybox.Activity;
 import Toybox.System;
+import Toybox.Attention;
+
+enum ACTIVITY_STATE { INITIAL, RUNNING, PAUSED, STOPPED }
 
 class SwimActivityController
 {
@@ -15,10 +18,17 @@ class SwimActivityController
     private var activityInfo as Activity.Info;
     private const hourSeconds = 60 * 60;
     private const minSeconds = 60;
+    private var swimActivitySession as SwimActivitySession;
+    private var activityState as ACTIVITY_STATE;
+    private var vibeProfile as VibeProfile;
 
     public function initialize(_view as TetheredSwimView)  
     {
         swimView = _view;
+        swimActivitySession = new SwimActivitySession();
+        activityState = INITIAL;
+
+        vibeProfile = new Attention.VibeProfile(75,2000);
 
         self.loadLastSwimType();
     }
@@ -27,15 +37,68 @@ class SwimActivityController
     {
         if (Toybox has :ActivityRecording) 
         {
-            if (self.isSessionRecording())
+            if (swimActivitySession.isSessionRecording())
             {
-                self.stopRecording();
+                swimActivitySession.pauseSession();
+                self.stopTimer();
+                activityState = PAUSED;
+
+                WatchUi.pushView(new Rez.Menus.pauseMenu(), new TetheredSwimMenuDelegate(self), WatchUi.SLIDE_UP);
             }
             else 
             {
-                self.startRecording();
+                self.startNewSession();
             }
         }  
+    }
+
+    public function stopActivity() as Void 
+    {
+        swimActivitySession.saveSession();
+        self.stopTimer();
+        activityState = STOPPED;
+        
+        WatchUi.requestUpdate();
+    }
+
+    public function resumeActivity() as Void
+    {
+        swimActivitySession.startSession();
+        self.startTimer();    
+    }
+
+    public function discardActivity() as Void
+    {
+        swimActivitySession.discardSession();
+    }
+
+    private function stopTimer() as Void 
+    {
+        if (timer != null)
+        {
+            timer.stop();            
+        }
+    }
+
+    public function startNewSession() as Void 
+    {
+        swimActivitySession.createSession();
+        swimActivitySession.startSession();
+        
+        self.startTimer(); 
+
+        laps = 1;
+
+        self.updateSwimLaps();
+        
+        WatchUi.requestUpdate();
+    }
+
+    private function startTimer() as Void
+    {
+        timer = new Timer.Timer();
+        timer.start(method(:timerCallback),1000,true);
+        activityState = RUNNING;
     }
 
     public function loadLastSwimType() as Void
@@ -58,11 +121,11 @@ class SwimActivityController
 
     public function updateSwimTime() as Void
     {
-        if (isSessionRecording())
+        if (swimActivitySession.isSessionRecording())
         {
             activityInfo = Activity.getActivityInfo() as Activity.Info;
             var swimTime = swimView.findDrawableById("swimTime");
-            swimTime.setText(self.formatTime(activityInfo.elapsedTime));
+            swimTime.setText(self.formatTime(activityInfo.timerTime));
         }
     }
 
@@ -78,80 +141,28 @@ class SwimActivityController
         swimTypeName.setText(swimType.swimName());   
     }
 
-    public function isSessionRecording() as Boolean 
-    {
-        return (session != null) && session.isRecording();
-    } 
-
-    public function stopRecording() as Void 
-    {
-        self.stopSession();
-        self.stopTimer();
-        
-        WatchUi.requestUpdate();
-    }
-
-    private function stopSession() as Void
-    {
-        if ((Toybox has :ActivityRecording) && isSessionRecording()) {
-            session.stop();
-            session.save();
-            session = null;
-        }
-    }
-
-    private function stopTimer() as Void 
-    {
-        if (timer != null)
-        {
-            timer.stop();            
-        }
-    }
-
-    public function startRecording() as Void 
-    {
-        self.startSession();
-        self.startTimer(); 
-
-        laps = 1;
-
-        self.updateSwimLaps();
-        
-        WatchUi.requestUpdate();
-    }
-
-    private function startSession() as Void 
-    {
-        session = ActivityRecording.createSession({:name=>"Tethered swim", :sport=>ActivityRecording.SPORT_SWIMMING});
-        session.start();   
-    }
-
-    private function startTimer() as Void
-    {
-        timer = new Timer.Timer();
-        timer.start(method(:timerCallback),1000,true);
-    }
-
     private function getNotificationTime() as Number
     {
-        return 30;
+        return swimType.getAutoLap();
     }
 
     public function timerCallback()
     {
         WatchUi.requestUpdate();
         
-        if (activityInfo.elapsedTime >= 1000 && ((activityInfo.elapsedTime / 1000) % self.getNotificationTime()) == 0)
+        if (activityInfo.elapsedTime >= 1000 && ((activityInfo.timerTime / 1000) % self.getNotificationTime()) == 0)
         {
             self.notifyUser();
             self.incLaps();
             self.updateSwimLaps();
+            swimActivitySession.addLap();
         }
     }
 
     public function notifyUser() as Void
     {
         Attention.playTone(Attention.TONE_LOUD_BEEP);
+        Attention.vibrate([vibeProfile] as Array<Attention.VibeProfile>);
     }
 
     private function formatTime(_time as Number) as String
@@ -176,5 +187,10 @@ class SwimActivityController
     public function incLaps() as Void
     {
         laps++;
+    }
+
+    public function getActivityState() as ACTIVITY_STATE
+    {
+        return activityState;        
     }
 }
