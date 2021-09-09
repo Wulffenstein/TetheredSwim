@@ -1,5 +1,0 @@
-<menu id="pauseMenu">
-    <menu-item id="item_continue" label="@Strings.activity_continue" />
-    <menu-item id="item_save" label="@Strings.activity_save" />
-    <menu-item id="item_discard" label="@Strings.activity_discard" />
-</menu>

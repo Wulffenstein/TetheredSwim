@@ -16,8 +16,6 @@ class SwimActivityController
     private var laps as Number;
     private var swimType as SwimTypeBase;
     private var activityInfo as Activity.Info;
-    private const hourSeconds = 60 * 60;
-    private const minSeconds = 60;
     private var swimActivitySession as SwimActivitySession;
     private var activityState as ACTIVITY_STATE;
     private var vibeProfile as VibeProfile;
@@ -43,7 +41,7 @@ class SwimActivityController
                 self.stopTimer();
                 activityState = PAUSED;
 
-                WatchUi.pushView(new Rez.Menus.pauseMenu(), new TetheredSwimMenuDelegate(self), WatchUi.SLIDE_UP);
+                WatchUi.pushView(UtilMenus.createPauseMenu(), new TetheredSwimMenuDelegate(self), WatchUi.SLIDE_UP);
             }
             else 
             {
@@ -125,7 +123,7 @@ class SwimActivityController
         {
             activityInfo = Activity.getActivityInfo() as Activity.Info;
             var swimTime = swimView.findDrawableById("swimTime");
-            swimTime.setText(self.formatTime(activityInfo.timerTime));
+            swimTime.setText(Util.formatTime(activityInfo.timerTime));
         }
     }
 
@@ -163,25 +161,6 @@ class SwimActivityController
     {
         Attention.playTone(Attention.TONE_LOUD_BEEP);
         Attention.vibrate([vibeProfile] as Array<Attention.VibeProfile>);
-    }
-
-    private function formatTime(_time as Number) as String
-    {
-        if (_time != null)
-        {
-            _time = _time / 1000;
-            var hours = _time / hourSeconds;
-            _time = _time - (hours * hourSeconds);
-            var mins = _time / minSeconds;
-            _time = _time - (mins * minSeconds);
-            var secs = _time;
-            
-            var timeStr = Lang.format("$1$:$2$:$3$", [hours.format("%02d"),mins.format("%02d"),secs.format("%02d")]);
-
-            return timeStr;
-        }
-
-        return "N/A";
     }
 
     public function incLaps() as Void

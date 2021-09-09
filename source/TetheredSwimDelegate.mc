@@ -15,7 +15,7 @@ class TetheredSwimDelegate extends WatchUi.BehaviorDelegate {
         //controller.updateSwimTypeName();
         if (controller.getActivityState() == INITIAL)
         {
-            WatchUi.pushView(new Rez.Menus.settingsMenu(), new TetheredSwimMenuDelegate(controller), WatchUi.SLIDE_UP);
+            WatchUi.pushView(UtilMenus.createSettingsMenu(swimView), new TetheredSwimMenuDelegate(controller), WatchUi.SLIDE_UP);
         }
         return true;
     }
@@ -26,5 +26,4 @@ class TetheredSwimDelegate extends WatchUi.BehaviorDelegate {
 
         return true;
     }
-
 }

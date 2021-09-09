@@ -3,20 +3,22 @@ import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Time;
 
-class TetheredSwimMenuDelegate extends WatchUi.MenuInputDelegate {
+class TetheredSwimMenuDelegate extends WatchUi.Menu2InputDelegate {
 
     var swimActivityController as SwimActivityController;
 
     function initialize(_swimActivityController as SwimActivityController) 
     {
-        MenuInputDelegate.initialize();
+        Menu2InputDelegate.initialize();
 
         swimActivityController = _swimActivityController;
     }
 
-    function onMenuItem(item as Symbol) as Void 
+    public function onSelect(item as MenuItem) as Void 
     {
-        switch (item)
+        var id = item.getId();
+    
+        switch (id)
         {
             case :item_freestyle:
                 swimActivityController.setSwimType(new SwimType_Freestyle());
@@ -34,7 +36,7 @@ class TetheredSwimMenuDelegate extends WatchUi.MenuInputDelegate {
                 self.createAutoLapPicker();
                 break;
             case :item_swim_type: 
-                WatchUi.pushView(new Rez.Menus.swimTypeMenu(), new TetheredSwimMenuDelegate(swimActivityController), WatchUi.SLIDE_UP);
+                WatchUi.pushView(UtilMenus.createSwimTypeMenu(), new TetheredSwimMenuDelegate(swimActivityController), WatchUi.SLIDE_UP);
                 break;
             case :item_secs_pr_100m:
                 self.createSecsPr100mPicker();
@@ -49,6 +51,16 @@ class TetheredSwimMenuDelegate extends WatchUi.MenuInputDelegate {
                 swimActivityController.discardActivity();
                 break;
             default: throw new Lang.Exception("Unknown item");
+        }
+    }
+
+    public function onBack() as Void 
+    {
+        WatchUi.popView(WatchUi.SLIDE_DOWN);
+
+        if (swimActivityController.getActivityState() == PAUSED)
+        {
+            swimActivityController.resumeActivity();            
         }
     }
 
