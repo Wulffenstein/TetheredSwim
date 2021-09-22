@@ -41,6 +41,9 @@ class TetheredSwimMenuDelegate extends WatchUi.Menu2InputDelegate {
             case :item_secs_pr_100m:
                 self.createSecsPr100mPicker();
                 break;
+            case :item_meters_pr_stroke:
+                self.createMetersPrStrokePicker();
+                break;
             case :item_save:
                 swimActivityController.stopActivity();
                 break;
@@ -69,7 +72,7 @@ class TetheredSwimMenuDelegate extends WatchUi.Menu2InputDelegate {
         var dataStorage = new DataStorage();
         var swimType = swimActivityController.getSwimType();
         var seconds = dataStorage.getAutoLap(swimType.swimStrokeType()) as Number;
-        WatchUi.pushView(new NumberPicker("m:ss / lap",seconds), new NumberPickerDelegate_AutoLap(swimType.swimStrokeType()), WatchUi.SLIDE_IMMEDIATE);
+        WatchUi.pushView(new Picker_Time("m:ss / lap",seconds), new PickerDelegate_AutoLap(swimType.swimStrokeType()), WatchUi.SLIDE_IMMEDIATE);
     }
 
     private function createSecsPr100mPicker() as Void
@@ -77,6 +80,14 @@ class TetheredSwimMenuDelegate extends WatchUi.Menu2InputDelegate {
         var dataStorage = new DataStorage() as DataStorage;
         var swimType = swimActivityController.getSwimType();
         var seconds = dataStorage.getSecsPr100m(swimType.swimStrokeType());
-        WatchUi.pushView(new NumberPicker("m:ss / 100m",seconds), new NumberPickerDelegate_SecsPr100m(swimType.swimStrokeType()), WatchUi.SLIDE_IMMEDIATE);
+        WatchUi.pushView(new Picker_Time("m:ss / 100m",seconds), new PickerDelegate_SecsPr100m(swimType.swimStrokeType()), WatchUi.SLIDE_IMMEDIATE);
+    }
+
+    private function createMetersPrStrokePicker() as Void
+    {
+        var dataStorage = new DataStorage() as DataStorage;
+        var swimType = swimActivityController.getSwimType();
+        var meters = dataStorage.getMetersPrStroke(swimType.swimStrokeType());
+        WatchUi.pushView(new Picker_Distance("m / stroke",meters), new PickerDelegate_MetersPrStroke(swimType.swimStrokeType()), WatchUi.SLIDE_IMMEDIATE);
     }
 }

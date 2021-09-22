@@ -1,6 +1,6 @@
 import Toybox.WatchUi;
 
-class NumberPicker extends WatchUi.Picker 
+class Picker_Time extends PickerBase 
 {
     public function initialize(_numberPickerTitle as String, _defaultSeconds as Number)
     {
@@ -21,13 +21,6 @@ class NumberPicker extends WatchUi.Picker
         defaults[2] = seconds / 10;
         defaults[3] = seconds % 10;
         
-        Picker.initialize({:title=>title, :pattern=>factories, :defaults=>defaults});       
-    }
-
-    public function onUpdate(dc as Dc) as Void 
-    {
-        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
-        dc.clear();
-        Picker.onUpdate(dc);
+        PickerBase.initialize({:title=>title, :pattern=>factories, :defaults=>defaults});       
     }
 }

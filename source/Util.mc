@@ -24,4 +24,15 @@ class Util
 
         return "N/A";
     } 
+
+    public static function formatDistance(_dist as Float) as String
+    {
+        if (_dist != null)
+        {
+
+            return _dist.format("%.2f");
+        }
+
+        return "N/A";
+    }
 }

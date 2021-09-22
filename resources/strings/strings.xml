@@ -15,4 +15,5 @@
     <string id="activity_save">Save</string>
     <string id="activity_discard">Discard</string>
     <string id="timeSeparator">:</string>
+    <string id="distanceSeparator">,</string>
 </strings>

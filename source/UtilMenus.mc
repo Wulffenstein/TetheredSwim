@@ -13,6 +13,7 @@ class UtilMenus
         menu.addItem(new WatchUi.MenuItem("Swim type", swimType.swimName(), :item_swim_type, null));
         menu.addItem(new WatchUi.MenuItem("Auto lap", Util.formatTime(dataStorage.getAutoLap(swimType.swimStrokeType()) * 1000), :item_auto_lap, null));
         menu.addItem(new WatchUi.MenuItem("Time / 100m", Util.formatTime(dataStorage.getSecsPr100m(swimType.swimStrokeType()) * 1000), :item_secs_pr_100m, null));
+        menu.addItem(new WatchUi.MenuItem("m / stroke", Util.formatDistance(dataStorage.getMetersPrStroke(swimType.swimStrokeType())), :item_meters_pr_stroke, null));
 
         return menu;
     }  

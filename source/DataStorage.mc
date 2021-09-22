@@ -7,7 +7,8 @@ enum SETTING_TYPE {
 
 enum SETTING_SWIM_TYPE {
     SETTING_AUTO_LAP,
-    SETTING_SECS_PR_100M
+    SETTING_SECS_PR_100M,
+    SETTING_METERS_PR_STROKE
 }
 
 enum SETTING_GLOBAL {
@@ -67,6 +68,19 @@ class DataStorage
         self.setSwimTypeSettings(_swimType,settings);
     }
 
+    public function getMetersPrStroke(_swimType as Number) as Float
+    {
+        return self.getSwimTypeSetting(_swimType, SETTING_METERS_PR_STROKE);
+    }
+
+    public function setMetersPrStroke(_swimType as Number, _metersPrStroke as Float) as Void
+    {
+        var settings = self.getSwimTypeSettings(_swimType);
+        settings[SETTING_METERS_PR_STROKE] = _metersPrStroke;
+
+        self.setSwimTypeSettings(_swimType,settings);
+    }
+
     public function getLastSwimType() as Number
     {
         var lastSwimType = Storage.getValue(SETTING_TYPE_GLOBAL + SETTING_LAST_SWIM_TYPE);
@@ -86,7 +100,7 @@ class DataStorage
 
     public function createEmptySwimTypeSettings() as Dictionary
     {
-        var settings = {SETTING_AUTO_LAP => 30, SETTING_SECS_PR_100M => 90};
+        var settings = {SETTING_AUTO_LAP => 30, SETTING_SECS_PR_100M => 90, SETTING_METERS_PR_STROKE => 1.00};
 
         return settings;
     }

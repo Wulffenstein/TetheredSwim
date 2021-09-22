@@ -1,9 +1,9 @@
 import Toybox.WatchUi;
 import Toybox.Lang;
 
-class NumberPickerDelegate extends WatchUi.PickerDelegate 
+class PickerDelegateBase extends WatchUi.PickerDelegate 
 {
-    var swimTypeId as Number;
+    private var swimTypeId as Number;
 
     public function initialize(_swimTypeId as Number) 
     {
@@ -20,16 +20,26 @@ class NumberPickerDelegate extends WatchUi.PickerDelegate
 
     public function onAccept(values as Array<Number?>) as Boolean 
     {
-        var seconds = values[0] * 60 + values[2] * 10 + values[3];
+        var value = self.createCombinedValue(values) as Number;
         
-        self.storeSelectedValue(seconds);
+        self.storeSelectedValue(value);
 
         WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
         return true;
     }
 
-    protected function storeSelectedValue(_seconds as Number)
+    protected function storeSelectedValue(_value as Object)
     {
         throw new Lang.Exception("Missing override");
+    }
+
+    protected function createCombinedValue(values as Array<Number?>) as Object
+    {
+        throw new Lang.Exception("Missing override");
+    }
+
+    protected function getSwimTypeId() as Number
+    {
+        return swimTypeId;
     }
 }
