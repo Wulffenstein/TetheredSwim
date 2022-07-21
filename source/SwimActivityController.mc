@@ -80,6 +80,7 @@ class SwimActivityController
 
     public function startNewSession() as Void 
     {
+        swimActivitySession.setMPrStroke(swimType.getMPrStroke());
         swimActivitySession.createSession();
         swimActivitySession.startSession();
         
@@ -95,8 +96,10 @@ class SwimActivityController
     private function startTimer() as Void
     {
         timer = new Timer.Timer();
-        timer.start(method(:timerCallback),1000,true);
+        timer.start(method(:timerCallback), 1000, true);
         activityState = RUNNING;
+
+        
     }
 
     public function loadLastSwimType() as Void
@@ -112,6 +115,7 @@ class SwimActivityController
     {
         swimType = _swimType;
     }
+
     public function getSwimType() as SwimTypeBase
     {
         return swimType;

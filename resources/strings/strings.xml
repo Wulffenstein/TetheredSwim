@@ -16,4 +16,8 @@
     <string id="activity_discard">Discard</string>
     <string id="timeSeparator">:</string>
     <string id="distanceSeparator">,</string>
+
+    <string id="strokesLabel">Strokes</string>
+    <string id="calcDist">Calc. dist.</string>
+    <string id="metersUnitId">m</string>
 </strings>

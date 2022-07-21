@@ -6,6 +6,7 @@ class SwimTypeBase
     private var autoLap as Number;
     private var secsPr100m as Number;
     private var dataStorage as DataStorage;
+    private var mPrStroke as Number;
 
     public function initialize()
     {
@@ -31,6 +32,7 @@ class SwimTypeBase
     {
         self.setAutoLap(dataStorage.getAutoLap(self.swimStrokeType()));
         self.setSecsPr100m(dataStorage.getSecsPr100m(self.swimStrokeType()));
+        self.setMPrStroke(dataStorage.getMetersPrStroke(self.swimStrokeType()));
     }
     
     public function swimStrokeType() as int 
@@ -61,6 +63,16 @@ class SwimTypeBase
     public function setSecsPr100m(_secsPr100m as Number) as Void
     {
         secsPr100m = _secsPr100m;
+    }
+
+    public function setMPrStroke(_mPrStroke as Number) as Void
+    {
+        self.mPrStroke = _mPrStroke;        
+    }
+
+    public function getMPrStroke() as Number
+    {
+        return self.mPrStroke;
     }
     
 }

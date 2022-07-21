@@ -1,0 +1,8 @@
+<resources>
+<fitContributions>
+    <fitField id="1" displayInChart="true" displayInActivityLaps="true" displayInActivitySummary="true" chartTitle="@Strings.strokesLabel"
+            sortOrder="1" precision="0" dataLabel="@Strings.strokesLabel" unitLabel="@Strings.strokesLabel" fillColor="#4185f2" />
+    <fitField id="2" displayInChart="true" displayInActivityLaps="true" displayInActivitySummary="true" chartTitle="@Strings.calcDist"
+            sortOrder="2" precision="0" dataLabel="@Strings.calcDist" unitLabel="@Strings.metersUnitId" fillColor="#196ffa" />
+</fitContributions>
+</resources>
