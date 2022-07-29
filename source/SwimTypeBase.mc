@@ -15,27 +15,27 @@ class SwimTypeBase
         self.loadSettings();
     }
 
-    public static function newFromStrokeType(_swimStrokeType as int)
+    public static function newFromStrokeType(_strokeType as int)
     {
-        switch(_swimStrokeType)     
+        switch(_strokeType)     
         {
             case Activity.SWIM_STROKE_BACKSTROKE: return new SwimType_Backstroke();
             case Activity.SWIM_STROKE_BREASTSTROKE: return new SwimType_Breaststroke();
             case Activity.SWIM_STROKE_BUTTERFLY: return new SwimType_Butterfly();
             case Activity.SWIM_STROKE_FREESTYLE: return new SwimType_Freestyle();
-            default: throw new Lang.Exception(Lang.format("Unsupported swim stroke type: $1$", [_swimStrokeType]));
+            default: throw new Lang.Exception(Lang.format("Unsupported swim stroke type: $1$", [_strokeType]));
         }
 
     }
 
     private function loadSettings() as Void
     {
-        self.setAutoLap(dataStorage.getAutoLap(self.swimStrokeType()));
-        self.setSecsPr100m(dataStorage.getSecsPr100m(self.swimStrokeType()));
-        self.setMPrStroke(dataStorage.getMetersPrStroke(self.swimStrokeType()));
+        self.setAutoLap(dataStorage.getAutoLap(self.strokeType()));
+        self.setSecsPr100m(dataStorage.getSecsPr100m(self.strokeType()));
+        self.setMPrStroke(dataStorage.getMetersPrStroke(self.strokeType()));
     }
     
-    public function swimStrokeType() as int 
+    public function strokeType() as int
     {
         throw new Lang.Exception("Missing override");
     }

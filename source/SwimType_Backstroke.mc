@@ -7,7 +7,7 @@ class SwimType_Backstroke extends SwimTypeBase
         SwimTypeBase.initialize();
     } 
 
-    public function swimStrokeType() as int 
+    public function strokeType() as int
     {
         return Activity.SWIM_STROKE_BACKSTROKE;
     }

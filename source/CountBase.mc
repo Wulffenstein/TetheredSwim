@@ -1,23 +1,24 @@
 using Toybox.Lang;
 using Toybox.Activity;
-import Toybox.Timer;
+using Toybox.Timer;
 
 enum AXIS {Y = 0, X = 1, Z = 2}
 
 class CountBase
 {
     private var prevAccelValue as int;
-    private var strokeCount as int;
+    private var strokeCountTotal as int;
+    private var strokeCountCurrentLap as int;
     private var timer as Timer.Timer?;
     
-    public function newFromStrokeType(_swimStrokeType as int)
+    public function newFromStrokeType(_strokeType as int) as CountBase
     {
-        switch(swimStrokeType)     
+        switch(_strokeType)     
         {
-            case SWIM_STROKE_BACKSTROKE: return new Count_BackStroke();
-            case SWIM_STROKE_BREASTSTROKE: return new Count_BreastStroke();
-            case SWIM_STROKE_BUTTERFLY: return new Count_Butterfly();
-            case SWIM_STROKE_FREESTYLE: return new Count_FreeStyle();
+            case Activity.SWIM_STROKE_BACKSTROKE: return new Count_BackStroke();
+            case Activity.SWIM_STROKE_BREASTSTROKE: return new Count_BreastStroke();
+            case Activity.SWIM_STROKE_BUTTERFLY: return new Count_Butterfly();
+            case Activity.SWIM_STROKE_FREESTYLE: return new Count_FreeStyle();
         }   
     }
     
@@ -55,12 +56,13 @@ class CountBase
 
     private function incStrokeCount()
     {
-        strokeCount += strokesPerRevolution();        
+        self.strokeCountTotal += strokesPerRevolution();   
+        self.strokeCountCurrentLap += strokesPerRevolution();     
     }
 
     public function start()
     {
-        self.timer = new Timer.timer();
+        self.timer = new Timer.Timer();
         self.timer.start(method(:checkUpdateStrokeCount), 50, true);
     }
 
@@ -74,6 +76,16 @@ class CountBase
 
     public function totalStrokes() as int
     {
-        return self.strokeCount;
+        return self.strokeCountTotal;
+    }
+
+    public function strokesInCurrentLap()
+    {
+        return self.strokeCountCurrentLap;
+    }
+
+    public function newLap() as Void
+    {
+        self.strokeCountCurrentLap = 0;
     }
 }

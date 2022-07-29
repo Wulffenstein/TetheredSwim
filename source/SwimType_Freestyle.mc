@@ -7,7 +7,7 @@ class SwimType_Freestyle extends SwimTypeBase
         SwimTypeBase.initialize();
     }
 
-    public function swimStrokeType() as int 
+    public function strokeType() as int
     {
         return Activity.SWIM_STROKE_FREESTYLE;
     }

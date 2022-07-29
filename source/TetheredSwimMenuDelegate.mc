@@ -71,23 +71,23 @@ class TetheredSwimMenuDelegate extends WatchUi.Menu2InputDelegate {
     {
         var dataStorage = new DataStorage();
         var swimType = swimActivityController.getSwimType();
-        var seconds = dataStorage.getAutoLap(swimType.swimStrokeType()) as Number;
-        WatchUi.pushView(new Picker_Time("m:ss / lap",seconds), new PickerDelegate_AutoLap(swimType.swimStrokeType()), WatchUi.SLIDE_IMMEDIATE);
+        var seconds = dataStorage.getAutoLap(swimType.strokeType()) as Number;
+        WatchUi.pushView(new Picker_Time("m:ss / lap",seconds), new PickerDelegate_AutoLap(swimType.strokeType()), WatchUi.SLIDE_IMMEDIATE);
     }
 
     private function createSecsPr100mPicker() as Void
     {
         var dataStorage = new DataStorage() as DataStorage;
         var swimType = swimActivityController.getSwimType();
-        var seconds = dataStorage.getSecsPr100m(swimType.swimStrokeType());
-        WatchUi.pushView(new Picker_Time("m:ss / 100m",seconds), new PickerDelegate_SecsPr100m(swimType.swimStrokeType()), WatchUi.SLIDE_IMMEDIATE);
+        var seconds = dataStorage.getSecsPr100m(swimType.strokeType());
+        WatchUi.pushView(new Picker_Time("m:ss / 100m",seconds), new PickerDelegate_SecsPr100m(swimType.strokeType()), WatchUi.SLIDE_IMMEDIATE);
     }
 
     private function createMetersPrStrokePicker() as Void
     {
         var dataStorage = new DataStorage() as DataStorage;
         var swimType = swimActivityController.getSwimType();
-        var meters = dataStorage.getMetersPrStroke(swimType.swimStrokeType());
-        WatchUi.pushView(new Picker_Distance("m / stroke",meters), new PickerDelegate_MetersPrStroke(swimType.swimStrokeType()), WatchUi.SLIDE_IMMEDIATE);
+        var meters = dataStorage.getMetersPrStroke(swimType.strokeType());
+        WatchUi.pushView(new Picker_Distance("m / stroke",meters), new PickerDelegate_MetersPrStroke(swimType.strokeType()), WatchUi.SLIDE_IMMEDIATE);
     }
 }

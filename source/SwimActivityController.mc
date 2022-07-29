@@ -23,12 +23,13 @@ class SwimActivityController
     public function initialize(_view as TetheredSwimView)  
     {
         swimView = _view;
-        swimActivitySession = new SwimActivitySession();
         activityState = INITIAL;
 
         vibeProfile = new Attention.VibeProfile(75,2000);
 
         self.loadLastSwimType();
+
+        swimActivitySession = new SwimActivitySession(swimType);
     }
 
     public function onSelect() as Void
@@ -80,8 +81,6 @@ class SwimActivityController
 
     public function startNewSession() as Void 
     {
-        swimActivitySession.setMPrStroke(swimType.getMPrStroke());
-        swimActivitySession.createSession();
         swimActivitySession.startSession();
         
         self.startTimer(); 
@@ -98,8 +97,6 @@ class SwimActivityController
         timer = new Timer.Timer();
         timer.start(method(:timerCallback), 1000, true);
         activityState = RUNNING;
-
-        
     }
 
     public function loadLastSwimType() as Void

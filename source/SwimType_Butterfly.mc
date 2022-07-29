@@ -1,5 +1,3 @@
-
-
 class SwimType_Butterfly extends SwimTypeBase
 {
     public function initialize()
@@ -7,7 +5,7 @@ class SwimType_Butterfly extends SwimTypeBase
         SwimTypeBase.initialize();
     } 
 
-    public function swimStrokeType() as int 
+    public function strokeType() as int 
     {
         return Activity.SWIM_STROKE_BUTTERFLY;
     }
@@ -16,5 +14,4 @@ class SwimType_Butterfly extends SwimTypeBase
     {
         return "Butterfly";
     } 
-    
 }
